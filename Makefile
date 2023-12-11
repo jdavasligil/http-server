@@ -2,10 +2,10 @@
 BINARY=bin
 
 # List of code (.c) directories (sep=space)
-CODEDIRS=src
+CODEDIRS=src src/server
 
 # List of include (.h) directories (sep=space)
-INCDIRS=./src
+INCDIRS=./src ./src/server
 
 # Location to store binary
 BUILD=build
@@ -28,13 +28,16 @@ CFILES=$(foreach D,$(CODEDIRS),$(wildcard $(D)/*.c))
 OBJECTS=$(patsubst %.c,%.o,$(CFILES))
 DEPFILES=$(patsubst %.c,%.d,$(CFILES))
 
+all: $(BUILD)/$(BINARY)
+
 run: $(BUILD)/$(BINARY)
 	./$^
 
-all: $(BUILD)/$(BINARY)
+debug: $(BUILD)/$(BINARY)
+	gdb ./$^
 
-$(BINARY): $(OBJECTS)
-	$(CC) -o $(BUILD)/$@ $^
+$(BUILD)/$(BINARY): $(OBJECTS)
+	$(CC) -o $@ $^
 
 %.o:%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
