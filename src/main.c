@@ -17,7 +17,7 @@
 
 #define IS_ERROR(v) ({ __typeof__ (v) _v = (v); _v < 0;})
 
-int read_from_client(int file_descriptor) {
+static inline int read_from_client(int file_descriptor) {
     char message_buffer[MAXMSG];
     const int nbytes = read(file_descriptor, message_buffer, MAXMSG);
     if (IS_ERROR(nbytes)) {
@@ -31,7 +31,7 @@ int read_from_client(int file_descriptor) {
     }
 }
 
-int make_socket(uint16_t port) {
+static inline int make_socket(uint16_t port) {
     const int sock = socket(PF_INET, SOCK_STREAM, 0);
     if (IS_ERROR(sock)) {
         perror("socket");
