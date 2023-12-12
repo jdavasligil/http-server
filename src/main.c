@@ -12,6 +12,8 @@
 
 #define PORT 443
 #define MAXMSG 8192
+#define RQST_QUEUE_MAX 1
+#define AUTO_PROTOCOL 0
 #define ERROR -1
 #define SUCCESS 0
 
@@ -32,7 +34,7 @@ static inline int read_from_client(int file_descriptor) {
 }
 
 static inline int make_socket(uint16_t port) {
-    const int sock = socket(PF_INET, SOCK_STREAM, 0);
+    const int sock = socket(PF_INET, SOCK_STREAM, AUTO_PROTOCOL);
     if (IS_ERROR(sock)) {
         perror("socket");
         exit(EXIT_FAILURE);
@@ -54,7 +56,7 @@ static inline int make_socket(uint16_t port) {
 //int main(int argc, char *argv[]) {
 int main(void) {
     const int sock = make_socket(PORT);
-    if (IS_ERROR(listen(sock, 1))) {
+    if (IS_ERROR(listen(sock, RQST_QUEUE_MAX))) {
         perror("listen");
         exit(EXIT_FAILURE);
     }
