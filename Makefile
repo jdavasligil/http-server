@@ -2,10 +2,10 @@
 BINARY=bin
 
 # List of code (.c) directories (sep=space)
-CODEDIRS=src src/server
+CODEDIRS=src
 
 # List of include (.h) directories (sep=space)
-INCDIRS=./src ./src/server
+INCDIRS=./src
 
 # Location to store binary
 BUILD=build
